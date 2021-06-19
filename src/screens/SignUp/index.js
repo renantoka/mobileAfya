@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
+
+import { UserContext } from '../../contexts/UserContext';
+
 import {
     Container,
     InputArea,
@@ -21,15 +26,36 @@ import afyaLogo from '../../assets/img/logo.png';
 
 export default () => {
 
+    const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
     const [nameField, setNameField] = useState('');
     const [emailField, setEmailField] = useState('');
     const [passwordlField, setPasswordField] = useState('');
 
-    const handleSignClick = () => {
+    /*  const handleSignClick = async () => {
+         if (nameField != '' && emailField != '' && passwordlField != '') {
+             let res = await Api.signUp(nameField, emailField, passwordField);
+             if (res.token) {
+                 await AsyncStorage.setItem('token', res.token);
 
-    }
+                userDispatch({
+                    type: 'setAvatar',
+                    payload: {
+                        avatar: res.data.avatar
+                    }
+                });
+
+                navigation.reset({
+                    routes:[{name: 'Dash'}]
+                });
+             } else {
+                 alert('Erro: '+res.error);
+             }
+         } else {
+             alert('Preencha os campos!')
+         }
+     } */
 
     const handleMessageButtonClick = () => {
         navigation.reset({
