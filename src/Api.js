@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-community/async-storage";
+
 const BASE_API = '';
 
 export default {
@@ -37,4 +39,11 @@ export default {
         const json = await req.json();
         return json;
     },
+    getDoctors: async () => {
+        const token = await AsyncStorage.getItem('token');
+
+        const req = await fetch(`${BASE_API}/doctorrs?token=${token}`);
+        const json = await req.json();
+        return json;
+    }
 };
