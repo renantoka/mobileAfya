@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import Api from '../../Api';
+import Api from '../../services/Api';
 
 import { UserContext } from '../../contexts/UserContext';
 
@@ -33,25 +33,28 @@ export default () => {
     const [senhaField, setSenhaField] = useState('');
 
     const handleSignClick = async () => {
-        if (registerField != '' && senhaField != '') {
-            let json = await Api.login(registerField, senhaField);
-            if (json.token) {
-                await AsyncStorage.setItem('token', json.token);
 
-                userDispatch({
-                    type: 'setAvatar',
-                    payload: {
-                        avatar: json.data.avatar
-                    }
-                });
-                navigation.reset({
-                    routes: [{ name: 'Dash' }]
-                });
-            } else {
-                alert('E-mail e/ou senha incorretos');
-            }
+        if (registerField != '' && senhaField != '') {
+            let json = await Api.post("/login", { registro: registerField, senha: senhaField })
+                .then(async res => {
+
+                    //await AsyncStorage.removeItem('token')
+                    await AsyncStorage.setItem('token', res.data.token)
+
+                    let token = await AsyncStorage.getItem('token')
+                    console.log(token)
+                    alert('Usuario autenticado')
+                    navigation.reset({
+                        routes: [{ name: 'MainTab' }]
+                    });
+                })
+                .catch(e => {
+                    console.log(e.message)
+                    alert('Usuario não autenticado')
+                }
+                )
         } else {
-            alert('Preencha os campos!')
+            alert('E-mail e/ou senha incorretos');
         }
     }
 

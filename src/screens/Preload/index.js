@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../../contexts/UserContext';
 
-import Api from '../../Api';
+import Api from '../../services/Api';
 
 import afyaLogo from '../../assets/img/logo.png';
 
@@ -18,27 +18,10 @@ export default () => {
     useEffect(() => {
         const checkToken = async () => {
             const token = await AsyncStorage.getItem('token');
-            if (token !== null) {
-                let res = await Api.checkToken(token);
-                if (res.token) {
-
-                    await AsyncStorage.setItem('token', res.token);
-
-                    userDispatch({
-                        type: 'setAvatar',
-                        payload: {
-                            avatar: res.data.avatar
-                        }
-                    });
-
-                    navigation.reset({
-                        routes: [{ name: "Dash" }]
-                    });
-                } else {
-                    navigation.navigate("Login")
-                }
+            if (!token) {
+                navigation.navigate("Login")
             } else {
-                navigation.navigate("Login");
+                navigation.navigate("MainTab");
             }
         }
         checkToken();
