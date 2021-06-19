@@ -18,11 +18,11 @@ export default () => (
             headerShown: false
         }}
     >
-        <Stack.Screen name="MainTab" component={MainTab} />
-        <Stack.Screen name="Preload" component={Preload} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Preload" component={Preload} />
         <Stack.Screen name="Cadastro" component={SignUp} />
         <Stack.Screen name="RegistrarCliente" component={RegisterClient} />
         <Stack.Screen name="RegistrarEspecialista" component={RegisterSpecialist} />
+        <Stack.Screen name="MainTab" component={MainTab} />
     </Stack.Navigator>
 );

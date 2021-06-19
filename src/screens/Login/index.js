@@ -3,6 +3,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import Api from '../../Api';
+
 import { UserContext } from '../../contexts/UserContext';
 
 import {
@@ -27,14 +29,14 @@ export default () => {
     const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
-    const [emailField, setEmailField] = useState('');
-    const [passwordlField, setPasswordField] = useState('');
+    const [registerField, setRegisterField] = useState('');
+    const [senhaField, setSenhaField] = useState('');
 
-    /*  const handleSignClick = async () => {
-         if (emailField != '' && passwordlField != '') {
-             let json = await Api.signIn(emailField, passwordField);
-             if (json.token) {
-                 await AsyncStorage.setItem('token', json.token);
+    const handleSignClick = async () => {
+        if (registerField != '' && senhaField != '') {
+            let json = await Api.login(registerField, senhaField);
+            if (json.token) {
+                await AsyncStorage.setItem('token', json.token);
 
                 userDispatch({
                     type: 'setAvatar',
@@ -42,18 +44,16 @@ export default () => {
                         avatar: json.data.avatar
                     }
                 });
-
                 navigation.reset({
-                    routes:[{name: 'Dash'}]
+                    routes: [{ name: 'Dash' }]
                 });
-
-             } else {
-                 alert('E-mail e/ou senha incorretos');
-             }
-         } else {
-             alert('Preencha os campos!')
-         }
-     } */
+            } else {
+                alert('E-mail e/ou senha incorretos');
+            }
+        } else {
+            alert('Preencha os campos!')
+        }
+    }
 
     const handleMessageButtonClick = () => {
         navigation.reset({
@@ -72,19 +72,19 @@ export default () => {
             <InputArea>
                 <SignInput
                     IconSvg={MailIcon}
-                    placeholder='Digite seu e-mail'
-                    value={emailField}
-                    onChangeText={t => setEmailField(t)}
+                    placeholder='Digite seu registro'
+                    value={registerField}
+                    onChangeText={t => setRegisterField(t)}
                 />
                 <SignInput
                     IconSvg={LockIcon}
                     placeholder='Digite sua senha'
-                    value={passwordlField}
-                    onChangeText={t => setPasswordField(t)}
+                    value={senhaField}
+                    onChangeText={t => setSenhaField(t)}
                     password={true}
                 />
 
-                <CustomButton>
+                <CustomButton onPress={handleSignClick}>
                     <CustomButtonText>Login</CustomButtonText>
                 </CustomButton>
             </InputArea>

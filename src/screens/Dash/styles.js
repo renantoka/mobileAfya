@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
-    background-color: lightblue;
+    background-color: #FFFAFA;
     flex: 1;
     justify-content: center;
     align-items: center;
@@ -23,15 +23,15 @@ export const HeaderTitle = styled.Text`
     width: 250px;
     font-size: 24px;
     font-weight: bold;
-    color: white;
+    color: black;
 `;
 export const SearchButton = styled.TouchableOpacity`
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 36px;
 `;
 
 export const LocationArea = styled.View`
-    background-color: #4EADBE;
+    background-color: #FFF5EE;
     height: 60px;
     border-radius: 30px;
     flex-direction: row;
@@ -39,12 +39,14 @@ export const LocationArea = styled.View`
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 30px;
+    border: 3px solid #13132B;
 `;
 
 export const LocationInput = styled.TextInput`
     flex: 1;
     font-size: 16px;
-    color: white;
+    color: black;
+    font-weight: bold;
 `;
 
 export const LocationFinder = styled.TouchableOpacity`
@@ -54,4 +56,9 @@ export const LocationFinder = styled.TouchableOpacity`
 
 export const LoadingIcon = styled.ActivityIndicator`
     margin-top: 50px;
+`;
+
+export const ListArea = styled.View`
+    margin-top: 30px;
+    margin-bottom: 30px;
 `;
