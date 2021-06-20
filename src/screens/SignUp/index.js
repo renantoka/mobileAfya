@@ -4,6 +4,8 @@ import { Image } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
+import Api from '../../services/Api';
+
 import { UserContext } from '../../contexts/UserContext';
 
 import {
@@ -19,6 +21,11 @@ import {
 import UserIcon from '../../assets/icons/user.svg'
 import MailIcon from '../../assets/icons/mail.svg';
 import LockIcon from '../../assets/icons/lock.svg';
+import PhoneIcon from '../../assets/icons/phone.svg';
+import CellphoneIcon from '../../assets/icons/smartphone.svg';
+import ProfessionIcon from '../../assets/icons/activity.svg';
+import HashIcon from '../../assets/icons/hash.svg';
+
 
 import SignInput from '../../components/SignInput';
 
@@ -29,33 +36,43 @@ export default () => {
     const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
+    const [registerField, setRegisterField] = useState('');
     const [nameField, setNameField] = useState('');
-    const [emailField, setEmailField] = useState('');
-    const [passwordlField, setPasswordField] = useState('');
+    const [phoneField, setPhoneField] = useState('');
+    const [cellphoneField, setCellphoneField] = useState('');
+    const [mailField, setMailField] = useState('');
+    const [passwordField, setPasswordField] = useState('');
+    const [professionField, setProfessionField] = useState('');
 
-    /*  const handleSignClick = async () => {
-         if (nameField != '' && emailField != '' && passwordlField != '') {
-             let res = await Api.signUp(nameField, emailField, passwordField);
-             if (res.token) {
-                 await AsyncStorage.setItem('token', res.token);
-
-                userDispatch({
-                    type: 'setAvatar',
-                    payload: {
-                        avatar: res.data.avatar
-                    }
-                });
-
-                navigation.reset({
-                    routes:[{name: 'Dash'}]
-                });
-             } else {
-                 alert('Erro: '+res.error);
-             }
-         } else {
-             alert('Preencha os campos!')
-         }
-     } */
+    const handleSignClick = async () => {
+        if (registerField != '' && nameField != '' && phoneField
+            != '' && cellphoneField != '' && mailField
+            != '' && passwordField != '' && professionField != '') {
+            let json = await Api.post("/specialist", {
+                registro: registerField,
+                nome: nameField,
+                telefone: phoneField,
+                celular: cellphoneField,
+                email: mailField,
+                senha: passwordField,
+                profissao: professionField
+            })
+                .then(res => {
+                    console.log(res.data)
+                    alert('Usuario criado com sucesso')
+                    navigation.reset({
+                        routes: [{ name: 'MainTab' }]
+                    });
+                })
+                .catch(e => {
+                    console.log(e.message)
+                    alert('Já existe esse usuário no sistema')
+                }
+                )
+        } else {
+            alert('Por favor preencha todos os campos')
+        }
+    }
 
     const handleMessageButtonClick = () => {
         navigation.reset({
@@ -65,34 +82,58 @@ export default () => {
 
     return (
         <Container>
+            {/* 
             <Image
                 source={afyaLogo}
                 style={{ width: 200, height: 200 }}
-                resizeMode="contain"
-            />
-
+                resizeMode='contain'
+            /> */}
             <InputArea>
                 <SignInput
+                    IconSvg={HashIcon}
+                    placeholder="Insira seu registro"
+                    value={registerField}
+                    onChangeText={t => setRegisterField(t)}
+                />
+                <SignInput
                     IconSvg={UserIcon}
-                    placeholder="Digite seu nome"
+                    placeholder="Insira seu nome"
                     value={nameField}
                     onChangeText={t => setNameField(t)}
                 />
                 <SignInput
+                    IconSvg={PhoneIcon}
+                    placeholder="Insira seu telefone"
+                    value={phoneField}
+                    onChangeText={t => setPhoneField(t)}
+                />
+                <SignInput
+                    IconSvg={CellphoneIcon}
+                    placeholder="Insira seu celular"
+                    value={cellphoneField}
+                    onChangeText={t => setCellphoneField(t)}
+                />
+                <SignInput
                     IconSvg={MailIcon}
-                    placeholder="Digite seu e-mail"
-                    value={emailField}
-                    onChangeText={t => setEmailField(t)}
+                    placeholder="Insira seu e-mail"
+                    value={mailField}
+                    onChangeText={t => setMailField(t)}
                 />
                 <SignInput
                     IconSvg={LockIcon}
-                    placeholder="Digite sua senha"
-                    value={passwordlField}
+                    placeholder="Insira sua senha"
+                    value={passwordField}
                     onChangeText={t => setPasswordField(t)}
                     password={true}
                 />
+                <SignInput
+                    IconSvg={ProfessionIcon}
+                    placeholder="Insira sua profissão"
+                    value={professionField}
+                    onChangeText={t => setProfessionField(t)}
+                />
 
-                <CustomButton>
+                <CustomButton onPress={handleSignClick}>
                     <CustomButtonText>Cadastrar</CustomButtonText>
                 </CustomButton>
             </InputArea>

@@ -30,12 +30,12 @@ export default () => {
     const navigation = useNavigation();
 
     const [registerField, setRegisterField] = useState('');
-    const [senhaField, setSenhaField] = useState('');
+    const [passwordField, setPasswordField] = useState('');
 
     const handleSignClick = async () => {
 
-        if (registerField != '' && senhaField != '') {
-            let json = await Api.post("/login", { registro: registerField, senha: senhaField })
+        if (registerField != '' && passwordField != '') {
+            let json = await Api.post("/login", { registro: registerField, senha: passwordField })
                 .then(async res => {
 
                     //await AsyncStorage.removeItem('token')
@@ -54,7 +54,7 @@ export default () => {
                 }
                 )
         } else {
-            alert('E-mail e/ou senha incorretos');
+            alert('Por favor, preencha todos os campos');
         }
     }
 
@@ -82,8 +82,8 @@ export default () => {
                 <SignInput
                     IconSvg={LockIcon}
                     placeholder='Digite sua senha'
-                    value={senhaField}
-                    onChangeText={t => setSenhaField(t)}
+                    value={passwordField}
+                    onChangeText={t => setPasswordField(t)}
                     password={true}
                 />
 

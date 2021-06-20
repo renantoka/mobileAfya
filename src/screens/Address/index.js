@@ -10,6 +10,7 @@ import { UserContext } from '../../contexts/UserContext';
 
 import {
     Container,
+    HeaderText,
     InputArea,
     CustomButton,
     CustomButtonText,
@@ -22,7 +23,7 @@ import UserIcon from '../../assets/icons/user.svg'
 import MailIcon from '../../assets/icons/mail.svg';
 import LockIcon from '../../assets/icons/lock.svg';
 import PhoneIcon from '../../assets/icons/phone.svg';
-import CellphoneIcon from '../../assets/icons/smartphone.svg';
+import neighborhooodIcon from '../../assets/icons/smartphone.svg';
 import HashIcon from '../../assets/icons/hash.svg';
 
 
@@ -35,53 +36,38 @@ export default () => {
     const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
-    const [cpfField, setCpfField] = useState('');
-    const [nameField, setNameField] = useState('');
-    const [phoneField, setPhoneField] = useState('');
-    const [cellphoneField, setCellphoneField] = useState('');
-    const [mailField, setMailField] = useState('');
-    const [bloodType, setBloodType] = useState('');
+    const [cepField, setCepField] = useState('');
+    const [compField, setCompField] = useState('');
+    const [numberField, setNumberField] = useState('');
+    const [neighborhoodField, setNeighborhoodField] = useState('');
+    const [streetField, setStreetField] = useState('');
+    const [ufType, ufType] = useState('');
 
     const handleSignClick = async () => {
-        if (cpfField != '' && nameField != '' && phoneField
-            != '' && cellphoneField != '' && mailField
-            != '' && bloodType != '') {
-
-            let token = await AsyncStorage.getItem('token')
-            console.log(token)
-
-            try {
-                const data = {
-                    cpf: cpfField,
-                    nome: nameField,
-                    telefone: phoneField,
-                    celular: cellphoneField,
-                    email: mailField,
-                    tipo_sanguineo: bloodType,
-                };
-
-                await Api.post("/patient", data, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }).then((res) => {
+        if (cepField != '' && compField != '' && numberField
+            != '' && neighborhoodField != '' && streetField
+            != '' && ufType != '' && professionField != '') {
+            let json = await Api.post("/patients", {
+                cep: cepField,
+                nome: compField,
+                number: numberField,
+                neighborhood: neighborhoodField,
+                street: streetField,
+                uf: ufType,
+            })
+                .then(res => {
+                    let token = AsyncStorage.getItem('token')
                     console.log(res.data)
-                    alert("O Paciente foi criado com sucesso")
+                    alert('Endereço adicionado com sucesso')
                     navigation.reset({
                         routes: [{ name: 'MainTab' }]
                     });
                 })
-
-            } catch (error) {
-                console.log(error)
-                alert("Já existe cliente com o CPF cadastrado")
-                navigation.reset({
-                    routes: [{ name: 'RegistrarCliente' }]
-                });
-            }
-
-        } else {
-            alert("Por favor, preencha todos os campos")
+                .catch(e => {
+                    console.log(e.message)
+                    alert('Já existe esse paciente cadastrado no sistema')
+                }
+                )
         }
     }
 
@@ -99,42 +85,46 @@ export default () => {
                 style={{ width: 200, height: 200 }}
                 resizeMode='contain'
             /> */}
+            <HeaderText>
+                Adicionar um novo endereço
+            </HeaderText>
             <InputArea>
                 <SignInput
                     IconSvg={HashIcon}
-                    placeholder="Insira o CPF do cliente"
-                    value={cpfField}
-                    onChangeText={t => setCpfField(t)}
+                    placeholder="CEP"
+                    value={cepField}
+                    onChangeText={t => setCepField(t)}
                 />
                 <SignInput
                     IconSvg={UserIcon}
-                    placeholder="Insira nome do cliente"
-                    value={nameField}
-                    onChangeText={t => setNameField(t)}
+                    placeholder="Complemento"
+                    value={compField}
+                    onChangeText={t => setCompField(t)}
                 />
                 <SignInput
                     IconSvg={PhoneIcon}
-                    placeholder="Insira telefone do cliente"
-                    value={phoneField}
-                    onChangeText={t => setPhoneField(t)}
+                    placeholder="Número"
+                    value={numberField}
+                    onChangeText={t => setNumberField(t)}
                 />
                 <SignInput
-                    IconSvg={CellphoneIcon}
-                    placeholder="Insira celular do cliente"
-                    value={cellphoneField}
-                    onChangeText={t => setCellphoneField(t)}
+                    IconSvg={neighborhoodIcon}
+                    placeholder="Bairro"
+                    value={neighborhoodField}
+                    onChangeText={t => setNeighborhoodField(t)}
                 />
                 <SignInput
                     IconSvg={MailIcon}
-                    placeholder="Insira e-mail do cliente"
+                    placeholder="Rua"
                     value={mailField}
-                    onChangeText={t => setMailField(t)}
+                    onChangeText={t => setStreetField(t)}
                 />
                 <SignInput
                     IconSvg={LockIcon}
-                    placeholder="Insira tipo sanguíneo do cliente"
-                    value={bloodType}
-                    onChangeText={t => setBloodType(t)}
+                    placeholder="UF"
+                    value={ufType}
+                    onChangeText={t => ufType(t)}
+                    password={true}
                 />
 
                 <CustomButton onPress={handleSignClick}>

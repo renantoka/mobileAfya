@@ -5,7 +5,6 @@ import Preload from '../screens/Preload';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp';
 import RegisterClient from '../screens/RegisterClient';
-import RegisterSpecialist from '../screens/RegisterSpecialist';
 
 import MainTab from '../stacks/MainTab';
 
@@ -22,7 +21,6 @@ export default () => (
         <Stack.Screen name="Preload" component={Preload} />
         <Stack.Screen name="Cadastro" component={SignUp} />
         <Stack.Screen name="RegistrarCliente" component={RegisterClient} />
-        <Stack.Screen name="RegistrarEspecialista" component={RegisterSpecialist} />
         <Stack.Screen name="MainTab" component={MainTab} />
     </Stack.Navigator>
 );

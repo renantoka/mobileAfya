@@ -8,6 +8,10 @@ export const Container = styled.SafeAreaView`
     height: 90%;
 `;
 
+export const HeaderText = styled.Text`
+    
+`;
+
 export const InputArea = styled.View`
     padding-top: 90px;
     width: 75%;
