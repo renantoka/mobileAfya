@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
@@ -6,6 +5,7 @@ export const Container = styled.SafeAreaView`
     flex: 1;
     justify-content: center;
     align-items: center;
+    height: 100%;
 `;
 
 export const Scroller = styled.ScrollView`
@@ -15,7 +15,7 @@ export const Scroller = styled.ScrollView`
 
 export const HeaderArea = styled.View`
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 `;
 

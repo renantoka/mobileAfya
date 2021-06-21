@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -15,24 +15,25 @@ import {
     CustomButtonText,
     SignMessageButton,
     SignMessageButtonText,
-    SignMessageButtonTextBold
+    SignMessageButtonTextBold,
+    CheckBoxText
 } from './styles';
 
-import UserIcon from '../../assets/icons/user.svg'
+import UserIcon from '../../assets/icons/user.svg';
 import MailIcon from '../../assets/icons/mail.svg';
 import LockIcon from '../../assets/icons/lock.svg';
 import PhoneIcon from '../../assets/icons/phone.svg';
 import CellphoneIcon from '../../assets/icons/smartphone.svg';
 import HashIcon from '../../assets/icons/hash.svg';
 
-
 import SignInput from '../../components/SignInput';
 
 import afyaLogo from '../../assets/img/logo.png';
 
+import CheckBox from '@react-native-community/checkbox';
+
 export default () => {
 
-    const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
     const [cpfField, setCpfField] = useState('');
@@ -41,6 +42,8 @@ export default () => {
     const [cellphoneField, setCellphoneField] = useState('');
     const [mailField, setMailField] = useState('');
     const [bloodType, setBloodType] = useState('');
+
+    const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
     const handleSignClick = async () => {
         if (cpfField != '' && nameField != '' && phoneField
@@ -87,66 +90,70 @@ export default () => {
 
     const handleMessageButtonClick = () => {
         navigation.reset({
-            routes: [{ name: 'Login' }]
+            routes: [{ name: 'Endereco' }]
         });
     }
 
     return (
         <Container>
-            {/* 
             <Image
                 source={afyaLogo}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 150, height: 150 }}
                 resizeMode='contain'
-            /> */}
-            <InputArea>
-                <SignInput
-                    IconSvg={HashIcon}
-                    placeholder="Insira o CPF do cliente"
-                    value={cpfField}
-                    onChangeText={t => setCpfField(t)}
-                />
-                <SignInput
-                    IconSvg={UserIcon}
-                    placeholder="Insira nome do cliente"
-                    value={nameField}
-                    onChangeText={t => setNameField(t)}
-                />
-                <SignInput
-                    IconSvg={PhoneIcon}
-                    placeholder="Insira telefone do cliente"
-                    value={phoneField}
-                    onChangeText={t => setPhoneField(t)}
-                />
-                <SignInput
-                    IconSvg={CellphoneIcon}
-                    placeholder="Insira celular do cliente"
-                    value={cellphoneField}
-                    onChangeText={t => setCellphoneField(t)}
-                />
-                <SignInput
-                    IconSvg={MailIcon}
-                    placeholder="Insira e-mail do cliente"
-                    value={mailField}
-                    onChangeText={t => setMailField(t)}
-                />
-                <SignInput
-                    IconSvg={LockIcon}
-                    placeholder="Insira tipo sanguíneo do cliente"
-                    value={bloodType}
-                    onChangeText={t => setBloodType(t)}
-                />
+            />
+            <ScrollView>
+                <InputArea>
+                    <SignInput
+                        IconSvg={HashIcon}
+                        placeholder="Insira o CPF do cliente"
+                        value={cpfField}
+                        onChangeText={t => setCpfField(t)}
+                    />
+                    <SignInput
+                        IconSvg={UserIcon}
+                        placeholder="Insira nome do cliente"
+                        value={nameField}
+                        onChangeText={t => setNameField(t)}
+                    />
+                    <SignInput
+                        IconSvg={PhoneIcon}
+                        placeholder="Insira telefone do cliente"
+                        value={phoneField}
+                        onChangeText={t => setPhoneField(t)}
+                    />
+                    <SignInput
+                        IconSvg={CellphoneIcon}
+                        placeholder="Insira celular do cliente"
+                        value={cellphoneField}
+                        onChangeText={t => setCellphoneField(t)}
+                    />
+                    <SignInput
+                        IconSvg={MailIcon}
+                        placeholder="Insira e-mail do cliente"
+                        value={mailField}
+                        onChangeText={t => setMailField(t)}
+                    />
+                    <SignInput
+                        IconSvg={LockIcon}
+                        placeholder="Insira tipo sanguíneo do cliente"
+                        value={bloodType}
+                        onChangeText={t => setBloodType(t)}
+                    />
+                    <CheckBox disabled={false}
+                        value={toggleCheckBox}
+                        onValueChange={(newValue) => setToggleCheckBox(newValue)} />
+                    <CheckBoxText>Declaro que todas as informações acimas são verdadeiras.</CheckBoxText>
 
-                <CustomButton onPress={handleSignClick}>
-                    <CustomButtonText>Cadastrar cliente</CustomButtonText>
-                </CustomButton>
-            </InputArea>
+                    <CustomButton onPress={handleSignClick}>
+                        <CustomButtonText>Cadastrar cliente</CustomButtonText>
+                    </CustomButton>
+                </InputArea>
 
-            <SignMessageButton onPress={handleMessageButtonClick}>
-                <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
-                <SignMessageButtonTextBold>Faça o Login</SignMessageButtonTextBold>
-            </SignMessageButton>
-
+                <SignMessageButton onPress={handleMessageButtonClick}>
+                    <SignMessageButtonText>Deseja adicionar o endereço do cliente?</SignMessageButtonText>
+                    <SignMessageButtonTextBold>Clique Aqui</SignMessageButtonTextBold>
+                </SignMessageButton>
+            </ScrollView>
         </Container>
     );
 }

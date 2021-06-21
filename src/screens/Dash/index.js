@@ -19,9 +19,11 @@ import {
 
 } from './styles';
 
+import Patient from '../Patient';
 import PatientItem from '../../components/PatientItem';
 
 import SearchIcon from '../../assets/icons/search.svg';
+import UsersIcon from '../../assets/icons/users.svg';
 import MyLocationIcon from '../../assets/icons/map-pin.svg';
 
 export default () => {
@@ -91,10 +93,10 @@ export default () => {
         //inserir pacientes aqui getPatients();
     }
 
-    const handleLocationSearch = () => {
+    /* const handleLocationSearch = () => {
         setCoords({});
         getPatients();
-    }
+    } */
 
     return (
         <Container>
@@ -106,21 +108,20 @@ export default () => {
                     <HeaderTitle numberOfLines={2}>
                         Encontre aqui o seu paciente
                     </HeaderTitle>
-                    <SearchButton onPress={() => navigation.navigate('Search')}>
-                        <SearchIcon width="28" height="28" color="black" />
+                    <SearchButton onPress={() => navigation.navigate('Paciente')}>
+                        <UsersIcon width="28" height="28" color="black" />
                     </SearchButton>
                 </HeaderArea>
 
                 <LocationArea>
                     <LocationInput
-                        placeholder="Onde você está?"
+                        placeholder="Qual o nome do paciente?"
                         placeholderTextColor="black"
                         value={locationText}
                         onChangeText={t => setLocationText(t)}
-                        onEndEditing={handleLocationSearch}
                     />
                     <LocationFinder onPress={handleLocationFinder}>
-                        <MyLocationIcon width="24" height="24" color="black" />
+                        <SearchIcon width="24" height="24" color="black" />
                     </LocationFinder>
                 </LocationArea>
 

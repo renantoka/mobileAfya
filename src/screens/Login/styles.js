@@ -45,3 +45,10 @@ export const SignMessageButtonTextBold = styled.Text`
     font-weight: bold;
     margin-left: 5px;
 `;
+
+export const CheckBoxText = styled.Text`
+    font-size: 16px;
+    margin-left: 50px;
+    margin-top: -27px;
+
+`;

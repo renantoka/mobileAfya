@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -15,7 +15,9 @@ import {
     CustomButtonText,
     SignMessageButton,
     SignMessageButtonText,
-    SignMessageButtonTextBold
+    SignMessageButtonTextBold,
+    CheckBoxText
+
 } from './styles';
 
 import UserIcon from '../../assets/icons/user.svg'
@@ -31,9 +33,10 @@ import SignInput from '../../components/SignInput';
 
 import afyaLogo from '../../assets/img/logo.png';
 
+import CheckBox from '@react-native-community/checkbox';
+
 export default () => {
 
-    const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
     const [registerField, setRegisterField] = useState('');
@@ -43,6 +46,8 @@ export default () => {
     const [mailField, setMailField] = useState('');
     const [passwordField, setPasswordField] = useState('');
     const [professionField, setProfessionField] = useState('');
+
+    const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
     const handleSignClick = async () => {
         if (registerField != '' && nameField != '' && phoneField
@@ -82,67 +87,71 @@ export default () => {
 
     return (
         <Container>
-            {/* 
             <Image
                 source={afyaLogo}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 150, height: 150 }}
                 resizeMode='contain'
-            /> */}
-            <InputArea>
-                <SignInput
-                    IconSvg={HashIcon}
-                    placeholder="Insira seu registro"
-                    value={registerField}
-                    onChangeText={t => setRegisterField(t)}
-                />
-                <SignInput
-                    IconSvg={UserIcon}
-                    placeholder="Insira seu nome"
-                    value={nameField}
-                    onChangeText={t => setNameField(t)}
-                />
-                <SignInput
-                    IconSvg={PhoneIcon}
-                    placeholder="Insira seu telefone"
-                    value={phoneField}
-                    onChangeText={t => setPhoneField(t)}
-                />
-                <SignInput
-                    IconSvg={CellphoneIcon}
-                    placeholder="Insira seu celular"
-                    value={cellphoneField}
-                    onChangeText={t => setCellphoneField(t)}
-                />
-                <SignInput
-                    IconSvg={MailIcon}
-                    placeholder="Insira seu e-mail"
-                    value={mailField}
-                    onChangeText={t => setMailField(t)}
-                />
-                <SignInput
-                    IconSvg={LockIcon}
-                    placeholder="Insira sua senha"
-                    value={passwordField}
-                    onChangeText={t => setPasswordField(t)}
-                    password={true}
-                />
-                <SignInput
-                    IconSvg={ProfessionIcon}
-                    placeholder="Insira sua profissão"
-                    value={professionField}
-                    onChangeText={t => setProfessionField(t)}
-                />
+            />
+            <ScrollView>
+                <InputArea>
+                    <SignInput
+                        IconSvg={HashIcon}
+                        placeholder="Insira seu registro"
+                        value={registerField}
+                        onChangeText={t => setRegisterField(t)}
+                    />
+                    <SignInput
+                        IconSvg={UserIcon}
+                        placeholder="Insira seu nome"
+                        value={nameField}
+                        onChangeText={t => setNameField(t)}
+                    />
+                    <SignInput
+                        IconSvg={PhoneIcon}
+                        placeholder="Insira seu telefone"
+                        value={phoneField}
+                        onChangeText={t => setPhoneField(t)}
+                    />
+                    <SignInput
+                        IconSvg={CellphoneIcon}
+                        placeholder="Insira seu celular"
+                        value={cellphoneField}
+                        onChangeText={t => setCellphoneField(t)}
+                    />
+                    <SignInput
+                        IconSvg={MailIcon}
+                        placeholder="Insira seu e-mail"
+                        value={mailField}
+                        onChangeText={t => setMailField(t)}
+                    />
+                    <SignInput
+                        IconSvg={LockIcon}
+                        placeholder="Insira sua senha"
+                        value={passwordField}
+                        onChangeText={t => setPasswordField(t)}
+                        password={true}
+                    />
+                    <SignInput
+                        IconSvg={ProfessionIcon}
+                        placeholder="Insira sua profissão"
+                        value={professionField}
+                        onChangeText={t => setProfessionField(t)}
+                    />
+                    <CheckBox disabled={false}
+                        value={toggleCheckBox}
+                        onValueChange={(newValue) => setToggleCheckBox(newValue)} />
+                    <CheckBoxText>Declaro que li e concordo com os termos e condições de uso.</CheckBoxText>
 
-                <CustomButton onPress={handleSignClick}>
-                    <CustomButtonText>Cadastrar</CustomButtonText>
-                </CustomButton>
-            </InputArea>
+                    <CustomButton onPress={handleSignClick}>
+                        <CustomButtonText>Cadastrar</CustomButtonText>
+                    </CustomButton>
+                </InputArea>
 
-            <SignMessageButton onPress={handleMessageButtonClick}>
-                <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
-                <SignMessageButtonTextBold>Faça o Login</SignMessageButtonTextBold>
-            </SignMessageButton>
-
+                <SignMessageButton onPress={handleMessageButtonClick}>
+                    <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
+                    <SignMessageButtonTextBold>Faça o Login</SignMessageButtonTextBold>
+                </SignMessageButton>
+            </ScrollView>
         </Container>
     );
 }

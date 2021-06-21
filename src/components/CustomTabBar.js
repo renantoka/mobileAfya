@@ -7,6 +7,7 @@ import SearchIcon from '../assets/icons/search.svg';
 import CalendarIcon from '../assets/icons/calendar.svg';
 import FavoriteIcon from '../assets/icons/star.svg';
 import UserIcon from '../assets/icons/user.svg';
+import Patient from '../screens/Patient';
 
 const TabArea = styled.View`
     height: 60px;
@@ -53,7 +54,7 @@ export default ({ state, navigation }) => {
                     width="24" height="24" color="white"
                 />
             </TabItem>
-            <TabItem onPress={() => goTo('Search')}>
+            <TabItem onPress={() => goTo('Paciente')}>
                 <SearchIcon
                     style={{ opacity: state.index === 1 ? 1 : 0.5 }}
                     width="24" height="24" color="white"

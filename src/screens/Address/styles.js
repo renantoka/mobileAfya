@@ -5,20 +5,17 @@ export const Container = styled.SafeAreaView`
     flex: 1;
     justify-content: center;
     align-items: center;
-    height: 90%;
-`;
-
-export const HeaderText = styled.Text`
-    
+    height: 100%;
+    width: 100%;
 `;
 
 export const InputArea = styled.View`
     padding-top: 90px;
-    width: 75%;
+    width: 90%;
 `;
 
 export const SignInput = styled.View`
-    width: 10px;
+    width: 20px;
     height: 10px;
 `;
 
@@ -53,4 +50,13 @@ export const SignMessageButtonTextBold = styled.Text`
     color: #d40054;   
     font-weight: bold;
     margin-left: 5px;
+`;
+
+export const CheckBoxText = styled.Text`
+    font-size: 14px;
+    margin-left: 40px;
+    margin-top: -27px;
+`;
+export const HeaderText = styled.Text`
+    
 `;

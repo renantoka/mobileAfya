@@ -10,6 +10,7 @@ export const Container = styled.SafeAreaView`
 
 export const CustomButton = styled.TouchableOpacity`
     height: 60px;
+    width: 60%;
     background-color: #d40054;
     border-radius: 30px;
     justify-content: center;

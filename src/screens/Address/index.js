@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -23,7 +23,7 @@ import UserIcon from '../../assets/icons/user.svg'
 import MailIcon from '../../assets/icons/mail.svg';
 import LockIcon from '../../assets/icons/lock.svg';
 import PhoneIcon from '../../assets/icons/phone.svg';
-import neighborhooodIcon from '../../assets/icons/smartphone.svg';
+import neighborhooodIcon from '../../assets/icons/phone.svg';
 import HashIcon from '../../assets/icons/hash.svg';
 
 
@@ -41,102 +41,117 @@ export default () => {
     const [numberField, setNumberField] = useState('');
     const [neighborhoodField, setNeighborhoodField] = useState('');
     const [streetField, setStreetField] = useState('');
-    const [ufType, ufType] = useState('');
+    const [ufType, setUfType] = useState('');
 
     const handleSignClick = async () => {
         if (cepField != '' && compField != '' && numberField
             != '' && neighborhoodField != '' && streetField
-            != '' && ufType != '' && professionField != '') {
-            let json = await Api.post("/patients", {
-                cep: cepField,
-                nome: compField,
-                number: numberField,
-                neighborhood: neighborhoodField,
-                street: streetField,
-                uf: ufType,
-            })
-                .then(res => {
-                    let token = AsyncStorage.getItem('token')
-                    console.log(res.data)
-                    alert('Endereço adicionado com sucesso')
-                    navigation.reset({
-                        routes: [{ name: 'MainTab' }]
-                    });
+            != '' && ufType != '') {
+
+            let token = await AsyncStorage.getItem('token')
+            console.log(token)
+
+            try {
+                const data = {
+                    cep: cepField,
+                    cidade: compField,
+                    numero: numberField,
+                    bairro: neighborhoodField,
+                    logradouro: streetField,
+                    estado: ufType
+                };
+
+                console.log(token)
+
+                let json = await Api.post(`/patient/address/${1}`, data, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
                 })
-                .catch(e => {
-                    console.log(e.message)
-                    alert('Já existe esse paciente cadastrado no sistema')
-                }
-                )
+                    .then(res => {
+
+                        console.log(res.data)
+                        alert('Endereço adicionado com sucesso')
+                        navigation.reset({
+                            routes: [{ name: 'MainTab' }]
+                        });
+                    })
+            }
+            catch (error) {
+                console.log(error)
+                alert("Erro ao cadastrar endereço")
+            }
+        } else {
+            alert('Preencha todos os campos')
         }
     }
 
     const handleMessageButtonClick = () => {
         navigation.reset({
-            routes: [{ name: 'Login' }]
+            routes: [{ name: 'RegistrarCliente' }]
         });
     }
 
     return (
         <Container>
-            {/* 
+
             <Image
                 source={afyaLogo}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 150, height: 150 }}
                 resizeMode='contain'
-            /> */}
-            <HeaderText>
-                Adicionar um novo endereço
-            </HeaderText>
-            <InputArea>
-                <SignInput
-                    IconSvg={HashIcon}
-                    placeholder="CEP"
-                    value={cepField}
-                    onChangeText={t => setCepField(t)}
-                />
-                <SignInput
-                    IconSvg={UserIcon}
-                    placeholder="Complemento"
-                    value={compField}
-                    onChangeText={t => setCompField(t)}
-                />
-                <SignInput
-                    IconSvg={PhoneIcon}
-                    placeholder="Número"
-                    value={numberField}
-                    onChangeText={t => setNumberField(t)}
-                />
-                <SignInput
-                    IconSvg={neighborhoodIcon}
-                    placeholder="Bairro"
-                    value={neighborhoodField}
-                    onChangeText={t => setNeighborhoodField(t)}
-                />
-                <SignInput
-                    IconSvg={MailIcon}
-                    placeholder="Rua"
-                    value={mailField}
-                    onChangeText={t => setStreetField(t)}
-                />
-                <SignInput
-                    IconSvg={LockIcon}
-                    placeholder="UF"
-                    value={ufType}
-                    onChangeText={t => ufType(t)}
-                    password={true}
-                />
+            />
+            <ScrollView>
+                <HeaderText>
+                    Adicionar um novo endereço
+                </HeaderText>
+                <InputArea>
+                    <SignInput
+                        IconSvg={HashIcon}
+                        placeholder="CEP"
+                        value={cepField}
+                        onChangeText={t => setCepField(t)}
+                    />
+                    <SignInput
+                        IconSvg={UserIcon}
+                        placeholder="Complemento"
+                        value={compField}
+                        onChangeText={t => setCompField(t)}
+                    />
+                    <SignInput
+                        IconSvg={PhoneIcon}
+                        placeholder="Número"
+                        value={numberField}
+                        onChangeText={t => setNumberField(t)}
+                    />
+                    <SignInput
+                        IconSvg={neighborhooodIcon}
+                        placeholder="Bairro"
+                        value={neighborhoodField}
+                        onChangeText={t => setNeighborhoodField(t)}
+                    />
+                    <SignInput
+                        IconSvg={MailIcon}
+                        placeholder="Rua"
+                        value={streetField}
+                        onChangeText={t => setStreetField(t)}
+                    />
+                    <SignInput
+                        IconSvg={LockIcon}
+                        placeholder="UF"
+                        value={ufType}
+                        onChangeText={t => setUfType(t)}
+                    />
 
-                <CustomButton onPress={handleSignClick}>
-                    <CustomButtonText>Cadastrar cliente</CustomButtonText>
-                </CustomButton>
-            </InputArea>
+                    <CustomButton onPress={handleSignClick}>
+                        <CustomButtonText>Cadastrar endereço</CustomButtonText>
+                    </CustomButton>
+                </InputArea>
 
-            <SignMessageButton onPress={handleMessageButtonClick}>
-                <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
-                <SignMessageButtonTextBold>Faça o Login</SignMessageButtonTextBold>
-            </SignMessageButton>
-
+                <SignMessageButton onPress={handleMessageButtonClick}>
+                    <SignMessageButtonText>Deseja cadastrar um cliente ao invés de endereço?</SignMessageButtonText>
+                    <SignMessageButtonTextBold>Clique aqui</SignMessageButtonTextBold>
+                </SignMessageButton>
+            </ScrollView>
         </Container>
     );
 }
