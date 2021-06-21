@@ -54,7 +54,7 @@ export default ({ state, navigation }) => {
                     width="24" height="24" color="white"
                 />
             </TabItem>
-            <TabItem onPress={() => goTo('Paciente')}>
+            <TabItem onPress={() => goTo('TodosPacientes')}>
                 <SearchIcon
                     style={{ opacity: state.index === 1 ? 1 : 0.5 }}
                     width="24" height="24" color="white"

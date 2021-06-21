@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 
 import PatientModal from '../../components/PatientModal';
 
@@ -7,34 +7,26 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import {
     Container,
-    Scroller,
-    FakeSwiper,
+    HeaderText,
     PageBody,
     UserInfoArea,
     ServiceArea,
-    TestimonialArea,
-    SwipeDot,
-    SwipeDotActive,
-    SwipeItem,
     UserInfo,
     UserInfoName,
     UserFavButton,
     BackButton,
-    BloodType
-
+    NormalText,
 } from './styles';
-
 
 import BackIcon from '../../assets/icons/arrow-left.svg'
 import FavoriteIcon from '../../assets/icons/star.svg'
+import afyaLogo from '../../assets/img/logo.png';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import Swiper from 'react-native-swiper';
-
 import Api from '../../services/Api';
 
-export default () => {
+export default (id) => {
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -44,41 +36,47 @@ export default () => {
 
     const [loading, setLoading] = useState(false);
 
+    const idParams = id.route.params.params
+
     useEffect(() => {
         const getPatientInfo = async () => {
             setLoading(true);
 
             let token = await AsyncStorage.getItem('token')
 
-            // console.log(token)
+            console.log("page patient", idParams)
+            console.log("page params", id.route)
 
-            const json = await Api.get(`/patient/${2}`, {
+            const json = await Api.get(`/patient/${idParams}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             }).then((res) => {
-                console.log(res.data.nome)
-                console.log(res.data[0].tipo_sanguineo)
-                console.log(res.data[0].nome)
 
                 setUser(false)
 
                 setUserInfo({
-                    id: 1,
+                    id: res.data[0].id,
                     name: res.data[0].nome,
                     bloodtype: res.data[0].tipo_sanguineo,
+                    cpf: res.data[0].cpf,
+                    celular: res.data[0].celular,
 
+                    rua: res.data[0].Endereco.logradouro,
+                    cep: res.data[0].Endereco.cep,
+                    bairro: res.data[0].Endereco.bairro,
+                    cidade: res.data[0].Endereco.cidade,
+                    estado: res.data[0].Endereco.estado,
+                    numero: res.data[0].Endereco.numero,
                 });
 
             }).catch((error) => {
                 console.log(error)
             })
-
-
             setLoading(false);
         }
         getPatientInfo();
-    }, []);
+    }, [idParams]);
 
     const handleBackButton = () => {
         navigation.goBack();
@@ -87,35 +85,48 @@ export default () => {
     const [selectedService, setSelectedService] = useState(null);
     const [showModal, setShowModal] = useState(true);
 
-    const handleServiceChoose = (key) => {
-        setSelectedService(key);
-        setShowModal(false);
+    const handleAddress = (id) => {
+        console.log(id)
+        navigation.navigate('Endereco', {
+            screen: 'Paciente',
+            params: id,
+        })
     }
+
 
     return (
         <Container>
+            <Image
+                source={afyaLogo}
+                style={{ width: 150, height: 150 }}
+                resizeMode="contain"
+            />
+            <ScrollView>
+                <PageBody>
+                    <HeaderText>
+                        Dados do paciente
+                    </HeaderText>
+                    <ServiceArea>
+                        <UserInfoArea>
+                            <UserInfo>
+                                <UserInfoName>{userInfo.name}</UserInfoName>
+                                <NormalText>Tipo sanguíneo: {userInfo.bloodtype}</NormalText>
+                                <NormalText>CPF: {userInfo.cpf}</NormalText>
+                                <NormalText>Celular: {userInfo.celular}</NormalText>
+                                <NormalText>Endereço: </NormalText>
+                                <NormalText>CEP {userInfo.cep}</NormalText>
+                                <NormalText>Rua {`${userInfo.rua}, Número${userInfo.numero} - Bairro${userInfo.bairro}`}</NormalText>
+                                <NormalText>Cidade {`${userInfo.cidade} - Estado${userInfo.estado}`}</NormalText>
 
-            <PageBody>
-                <ServiceArea>
-                    <UserInfoArea>
-                        <UserInfo>
-                            <UserInfoName>Paciente: {userInfo.name}</UserInfoName>
-                            <BloodType>Tipo sanguíneo: {userInfo.bloodtype}</BloodType>
-                        </UserInfo>
-                        <UserFavButton>
-                            <FavoriteIcon width="24" height="24" color="#FFFFFF" />
-                        </UserFavButton>
-                    </UserInfoArea>
+                            </UserInfo>
+                            <UserFavButton>
+                                <FavoriteIcon width="24" height="24" color="black" />
+                            </UserFavButton>
+                        </UserInfoArea>
+                    </ServiceArea>
+                </PageBody>
+            </ScrollView>
 
-                </ServiceArea>
-                <TestimonialArea>
-
-                </TestimonialArea>
-
-            </PageBody>
-            {/* ) :
-                    <FakeSwiper></FakeSwiper>
-                } */}
 
             <BackButton onPress={handleBackButton}>
                 <BackIcon width="44" height="44" color="#d40054" />

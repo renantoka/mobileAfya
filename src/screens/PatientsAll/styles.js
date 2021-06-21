@@ -1,4 +1,5 @@
 
+import React from 'react';
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
@@ -59,17 +60,6 @@ export const UserFavButton = styled.TouchableOpacity`
     margin-left: 20px;
     margin-right: 20px;
 `;
-export const ButtonRegisterAddress = styled.TouchableOpacity`
-width: 22px;
-height: 22px;
-background-color: #F8F8FF;
-border-radius: 11px;
-justify-content: center;
-align-items: center;
-margin-top: 20px;
-margin-left: 20px;
-margin-right: 20px;
-`;
 
 export const BackButton = styled.TouchableOpacity`
     position: absolute;
@@ -78,7 +68,7 @@ export const BackButton = styled.TouchableOpacity`
     z-index: 5;
 `;
 
-export const NormalText = styled.Text`
+export const BloodType = styled.Text`
     color: black;
     font-size: 18px;
     margin-bottom: 10px;

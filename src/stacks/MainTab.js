@@ -10,6 +10,7 @@ import Profile from '../screens/Profile';
 import Patient from '../screens/Patient';
 import RegisterClient from '../screens/RegisterClient';
 import Address from '../screens/Address';
+import PatientsAll from '../screens/PatientsAll';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,5 +23,6 @@ export default () => (
         <Tab.Screen name="Endereco" component={Address} />
         <Tab.Screen name="RegistrarCliente" component={RegisterClient} />
         <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="TodosPacientes" component={PatientsAll} />
     </Tab.Navigator>
 )

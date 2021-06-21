@@ -1,139 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components/native';
 import AsyncStorage from '@react-native-community/async-storage';
-
-import Api from '../services/Api';
+import {
+    Modal, ModalArea, ModalBody, ModalItem,
+    UserInfo, UserName,
+    CloseButton,
+    DateInfo, DatePrevArea, DateTitleArea, DateTitle, DateNextArea,
+    DateList, DateItem, DateItemWeekDay, DateItemNumber,
+    TimeList, TimeItem, TimeItemText,
+    FinishButton, FinishButtonText
+} from './PatientModalStyles';
 
 import MinusIcon from '../assets/icons/minus.svg'
 import NavPrevIcon from '../assets/icons/arrow-left.svg'
 import NavNextIcon from '../assets/icons/arrow-right.svg'
 
 import { useNavigation } from '@react-navigation/native';
-
-const Modal = styled.Modal`
-`;
-const ModalArea = styled.View`
-    flex: 1;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: flex-end;
-`;
-const ModalBody = styled.View`
-    background-color: #D40054;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    min-height: 300px;
-    padding: 10px 20px 40px 20px;
-`;
-const ModalItem = styled.View`
-    background-color: whitesmoke;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    padding: 10px;
-`;
-
-const UserInfo = styled.View`
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-`;
-
-const UserName = styled.Text`
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-`;
-
-const UserSpecialty = styled.Text`
-    color: black;
-    font-size: 18px;
-`;
-
-const CloseButton = styled.TouchableOpacity`
-    width: 40px;
-    height: 40px;
-`;
-
-const DateInfo = styled.View`
-    flex-direction: row;
-`;
-
-const DatePrevArea = styled.TouchableOpacity`
-    flex: 1;
-    justify-content: flex-end;
-    align-items: flex-end;
-`;
-
-const DateTitleArea = styled.View`
-    width: 140px;
-    justify-content: center;
-    align-items: center;
-`;
-
-const DateTitle = styled.Text`
-    font-size: 17px;
-    font-weight: bold;
-    color: black;
-    align-items: center;
-`;
-
-const DateNextArea = styled.TouchableOpacity`
-    flex: 1;
-    align-items: flex-start;
-`;
-
-const DateList = styled.ScrollView`
-    
-`;
-
-const DateItem = styled.TouchableOpacity`
-    width: 45px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-`;
-
-const DateItemWeekDay = styled.Text`
-    font-size: 16px;
-    font-weight: bold;
-`;
-
-const DateItemNumber = styled.Text`
-    font-size: 16px;
-    font-weight: bold;
-`;
-
-const TimeList = styled.ScrollView`
-    flex: 1;
-`;
-
-const TimeItem = styled.TouchableOpacity`
-    width: 75px;
-    height: 40px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-`;
-
-const TimeItemText = styled.Text`
-    font-size: 16px;
-`;
-
-const FinishButton = styled.TouchableOpacity`
-    background-color: #202124;
-    height: 60px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    border: 2px solid black;
-`;
-
-const FinishButtonText = styled.Text`
-color: white;
-font-size: 20px;
-font-weight: bold;
-`;
 
 const months = [
     'Janeiro',
@@ -205,9 +86,7 @@ export default ({ show, setShow, user }) => {
         setSelectedYear(today.getFullYear());
         setSelectedMonth(today.getMonth());
         setSelectedDay(today.getDate());
-
     }, []);
-
 
     useEffect(() => {
         if (user.available && selectedDay > 0) {
@@ -298,13 +177,12 @@ export default ({ show, setShow, user }) => {
             <ModalArea>
                 <ModalBody>
                     <CloseButton onPress={handleCloseButton}>
-                        <MinusIcon width="40" height="40" color="black" />
+                        <MinusIcon width="20" height="40" color="black" />
                     </CloseButton>
 
                     <ModalItem>
                         <UserInfo>
                             <UserName>{user.name}</UserName>
-                            <UserSpecialty>{user.bloodtype}</UserSpecialty>
                         </UserInfo>
                     </ModalItem>
 

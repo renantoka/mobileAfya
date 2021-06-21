@@ -6,12 +6,12 @@ export const Container = styled.SafeAreaView`
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 100%;
 `;
 
 export const InputArea = styled.View`
     padding-top: 90px;
     width: 90%;
+    padding-left: 20px;
 `;
 
 export const SignInput = styled.View`
@@ -34,22 +34,26 @@ export const CustomButtonText = styled.Text`
 `;
 
 export const SignMessageButton = styled.TouchableOpacity`
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     margin-top: 10px;
     margin-bottom: 100px;
+    width: 85%;
 `;
 
 export const SignMessageButtonText = styled.Text`
     font-size: 16px;
-    color: #202124;    
+    color: #202124;   
+    padding-left: 30px;
+
 `;
 
 export const SignMessageButtonTextBold = styled.Text`
     font-size: 16px;
     color: #d40054;   
     font-weight: bold;
-    margin-left: 5px;
+    padding-left: 90px;
+    margin-top: -21px;
 `;
 
 export const CheckBoxText = styled.Text`

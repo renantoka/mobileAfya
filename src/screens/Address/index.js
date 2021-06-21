@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Image, ScrollView } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -35,6 +35,7 @@ export default () => {
 
     const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
+    const route = useRoute();
 
     const [cepField, setCepField] = useState('');
     const [compField, setCompField] = useState('');
@@ -51,36 +52,40 @@ export default () => {
             let token = await AsyncStorage.getItem('token')
             console.log(token)
 
-            try {
-                const data = {
-                    cep: cepField,
-                    cidade: compField,
-                    numero: numberField,
-                    bairro: neighborhoodField,
-                    logradouro: streetField,
-                    estado: ufType
-                };
+            const data = {
+                cep: cepField,
+                cidade: compField,
+                numero: numberField,
+                bairro: neighborhoodField,
+                logradouro: streetField,
+                estado: ufType
+            };
 
-                console.log(token)
 
-                let json = await Api.post(`/patient/address/${1}`, data, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                    .then(res => {
+            useEffect(() => {
+                async function fetchAddress() {
 
-                        console.log(res.data)
+                    const res = await Api.post(`/patient/address/${req.body.id}`, data, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+
+                    if (res) {
                         alert('Endereço adicionado com sucesso')
                         navigation.reset({
                             routes: [{ name: 'MainTab' }]
                         });
-                    })
-            }
-            catch (error) {
-                console.log(error)
-                alert("Erro ao cadastrar endereço")
-            }
+                    } else {
+                        console.log(error)
+                        alert("Erro ao cadastrar endereço")
+                    }
+                }
+                fetchAddress();
+
+            }, [idParams])
+
+
         } else {
             alert('Preencha todos os campos')
         }
