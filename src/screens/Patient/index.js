@@ -48,13 +48,13 @@ export default () => {
         const getPatientInfo = async () => {
             setLoading(true);
 
-            // let token = await AsyncStorage.getItem('token')
+            let token = await AsyncStorage.getItem('token')
 
             // console.log(token)
 
             const json = await Api.get(`/patient/${2}`, {
                 headers: {
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibm9tZSI6Ik1hcmPDrWxpbyIsImlhdCI6MTYyNDIzMzgxMCwiZXhwIjoxNjI0MzIwMjEwfQ.9hnlrpaOpEVDpL44XQi-4Y2HneP2Z5ogMmoEoUpDYb0`
+                    'Authorization': `Bearer ${token}`
                 }
             }).then((res) => {
                 console.log(res.data.nome)
