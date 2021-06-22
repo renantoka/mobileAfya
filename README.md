@@ -15,23 +15,21 @@ https://github.com/educacao-gama/desafios-gama/tree/main/atendimento%20medico
 ### Para utilizar o app é necessário ter pré instalado em sua máquina: Node Package Manager (NPM) e Android Studio
 
 <br>
-<br>
-<br>
 
-## Rodar o comando: 
+### Clone o projeto e acesse a pasta:
+```shell
+$ git clone https://github.com/renantoka/mobileAfya.git && cd mobileAfya
+```
+### Rodar o comando: 
 
 ```shell
-  npm install
+$ npm install
 ``` 
 para instalação dos pacotes utilizados
 
-<br>
-<br>
-<br>
-
-## e o comando: 
+### e o comando: 
 ```shell
-  npx react-native run-android
+$ npx react-native run-android
 ``` 
 para emular a aplicação no Android Studio
 
@@ -60,3 +58,9 @@ para emular a aplicação no Android Studio
 
 ![](https://i.imgur.com/SvhDRzH.png)
 > Tela de erro de CPF já existente no sistema.
+
+## links úteis: 
+
+- [Repositório Backend/API:](https://github.com/jrsmarcilio/backend-g4t2)
+
+- [Frontend feito em React:](https://github.com/jrsmarcilio/react-g4t2)
