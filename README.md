@@ -1,6 +1,13 @@
 # mobileAfya
+#### Autores
+- [Renan Tokashiki](https://github.com/renantoka) 
+- [Marcílio Júnior](https://github.com/jrsmarcilio) 
+- [Lutchenca Medeiros](https://github.com/lutchenca) 
 
-### Aplicativo mobile feito para desafio do AfyaLabs, link do repositório do desafio: https://github.com/educacao-gama/desafios-gama/tree/main/atendimento%20medico 
+
+### Aplicativo mobile feito para desafio do AfyaLabs.
+### link do repositório do desafio: 
+https://github.com/educacao-gama/desafios-gama/tree/main/atendimento%20medico 
 <br>
 <br>
 <br>
