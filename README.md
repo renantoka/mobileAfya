@@ -6,10 +6,10 @@
 <br>
 <br>
 
-## Rodar o comando ***npm install*** para instalação dos pacotes utilizados
+## Rodar o comando: **npm install** para instalação dos pacotes utilizados
 
 <br>
 <br>
 <br>
 
-## e o comando ***npx react-native run-android*** para emular a aplicação no Android Studio
+## e o comando: **npx react-native run-android** para emular a aplicação no Android Studio
